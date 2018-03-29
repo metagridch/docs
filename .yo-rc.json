@@ -1,0 +1,10 @@
+{
+  "generator-openapi-repo": {
+    "importExistingSpec": false,
+    "name": "metagrid",
+    "repo": "metagridch/metagrid.github.io",
+    "splitSpec": false,
+    "samples": true,
+    "installSwaggerUI": true
+  }
+}

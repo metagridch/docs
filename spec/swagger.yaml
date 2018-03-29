@@ -118,9 +118,15 @@ paths:
             $ref: '#/definitions/Widget'
           examples:
           # repsonse samples for each type operation produces
-            application/json:
-              username: user1
-              email: user@example.com
+            application/jsonp:
+              hls: 
+                url: "http:\/\/www.hls-dhs-dss.ch\/textes\/d\/D4647.php"
+                short_description: "Historical Dictionary of Switzerland"
+                long_description: "Historical Dictionary of Switzerland"
+              GND:
+                url: "http:\/\/d-nb.info\/gnd\/124769942"
+                short_description: "Integrated authority file (GND)"
+                long_description: "Integrated authority file (GND)"
         '500':
           description: Internal error
         '404':
@@ -160,6 +166,58 @@ paths:
           description: 'OK'
           schema:
             $ref: '#/definitions/SearchResult'
+          examples:
+          # repsonse samples for each type operation produces
+            application/json:
+              meta:
+                total: 571
+                start: 0
+                limit: 1
+                uri: https://api.metagrid.ch/search?group=1&amp;query=max&amp;skip=0&amp;take=10
+              concordances:
+              - id: 8522
+                name: Dr Max Metzger Josef 1887-02-03 1944-04-17
+                uri: https://api.metagrid.ch/api/v2/concordances/8522.json
+                resources:
+                - _type: person
+                  id: 22025
+                  uri: https://api.metagrid.ch/api/v2/resources/22025.json
+                  identifier: '973'
+                  concordance:
+                    id: 8522
+                    uri: https://api.metagrid.ch/api/v2/concordances/8522.json
+                  provider:
+                    slug: lonsea
+                    uri: https://api.metagrid.ch/api/v2/providers/lonsea
+                  link:
+                    rel: resource
+                    uri: http://www.lonsea.de/pub/person/973
+                  metadata:
+                    name: " Dr Max"
+                    first_name: Dr Max
+                    last_name: Metzger Josef
+                    birth_date: '1887-02-03'
+                    death_date: '1944-04-17'
+                - _type: person
+                  id: 22027
+                  uri: https://api.metagrid.ch/api/v2/resources/22027.json
+                  identifier: '52481817'
+                  concordance:
+                    id: 8522
+                    uri: https://api.metagrid.ch/api/v2/concordances/8522.json
+                  provider:
+                    slug: viaf
+                    uri: https://api.metagrid.ch/api/v2/providers/viaf
+                  link:
+                    rel: resource
+                    uri: http://viaf.org/viaf/52481817
+                  metadata:
+                    name: 'Metzger '
+                    first_name: Max J.
+                    last_name: Metzger
+                    birth_date: '1887-02-03'
+                    death_date: '1944-04-17'
+
 # An object to hold data types that can be consumed and produced by operations.
 # These data types can be primitives, arrays or models.
 definitions:

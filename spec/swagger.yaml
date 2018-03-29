@@ -1,0 +1,296 @@
+# This is an **example** API to demontstrate features of OpenAPI specification.
+# It doesn't cover all OpenAPI features. For more full example check out: https://github.com/APIs-guru/petstore_extended
+
+swagger: '2.0'
+# You should specify common part of your endpoints in the following format:
+#   <schemes>://<host><basepath>
+schemes:
+  - http # Remove if your API doesn't support HTTP
+  - https # Remove if your API donsn't support HTTPS
+host: api.metagrid.ch # Replace with your hostname. You can also specify port e.g. example.com:777
+basePath: / # Replace with your basePath. Note: SHOULD begin with '/'.
+info:
+  # Describe your API here, you can use GFM (https://guides.github.com/features/mastering-markdown) here
+  description: |
+    This is a brief documentation for the public metagrid API. This part of the API is available without authentification and delivers concordances and serach results from metagrid. Most often you can interact with the api over a client library. Currently there are clients for php and js. The preferred way to integrate the widget is with javascript directly in the frontend.
+    # Introduction
+      Metgrid is designed to fetch data from different partner websites and API's and let user build concordances between same persons on differet websites. This helps to connect research projects with biographical data in a federative way. Metagid is not an normativ autority, it's just a repository of connection between different providers.
+    # API
+      The API has public and a private accessible endpoints. This documentation just covers the public endpoints and is designed to help developers to integrate the api in theire project.
+  version: '2.0.0' # Your API version
+  # It can be any string but it is better to use semantic versioning: http://semver.org/
+  # Warning: OpenAPI require version to be string, but without quotation YAML can recognize it as number.
+
+  title: api.metagrid.ch
+  # Keep it simple. Don't add "API" or verison at the end of the string.
+
+  termsOfService: 'https://www.metagrid.ch/en/code-of-conduct/' # [Optional] Replace with an URL to your ToS
+  contact:
+    email: info@metagrid.ch # [Optional] Replace with your contact email
+    url: 'https://www.metagrid.ch/ueber-uns/' # [Optional] Replace with link to your contact form
+  license:
+    name: AGPL
+    url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
+  x-logo:
+    url: 'https://www.metagrid.ch/wordpress/wp-content/uploads/metagrid_logo.png'
+produces:
+  # List of mime types your API endpoins can return.
+  # This is a global default. You can OVERWRITE it in each specific operation.
+  # Remove the ones not used in your API
+  - application/json
+  - application/jsonp
+  # you can add any mime type your API produces to the list
+consumes:
+  # List of mime types your API endpoins consumes.
+  # This is a global default. You can OVERWRITE it in each specific operation.
+  # Remove the ones not supported by your API
+  - application/json
+  # you can add any mime type your API consumes to the list
+
+# A list of tags used by the specification with additional metadata.
+# The order of the tags can be used to reflect on their order by the parsing tools.
+tags:
+  - name: widget
+    description: Serves links for a give resource of a provider
+  - name: search
+    description: Search in metagrid
+
+# Holds the relative paths to the individual endpoints. The path is appended to the
+# basePath in order to construct the full URL. 
+paths:
+  /widget/{providerSlug}/{entitySlug}/{id}: # path parameter in curly braces
+    # documentation for GET operation for this path
+    get:
+      tags:
+        - widget
+      parameters:
+        - name: providerSlug
+          in: path # place where paramter is passed: path, header, query or body, formData
+          description: "The slug of the provider"
+          required: true
+          type: "string"
+        - name: entitySlug
+          required: true
+          in: path # place where paramter is passed: path, header, query or body, formData
+          description: 'The slug of the entity (person|place|organization)'
+          # type of the paramter: string, number, integer, boolean, array
+          type: string
+        - name: id
+          required: true
+          in: path # place where paramter is passed: path, header, query or body, formData
+          description: 'The identifier of the resource in the providers DB. Most often this is a numeric value'
+          # type of the paramter: string, number, integer, boolean, array
+          type: string
+        - name: jsoncallback
+          required: true
+          in: query # place where paramter is passed: path, header, query or body, formData
+          description: The jsonp callback function 
+          # type of the paramter: string, number, integer, boolean, array
+          type: string
+        - name: lang
+          in: query # place where paramter is passed: path, header, query or body, formData
+          description: The language for the result. The result is translated, if the provider added a translation. Otherwise the fallback language is returend
+          # type of the paramter: string, number, integer, boolean, array
+          type: string
+        - name: include
+          in: query # place where paramter is passed: path, header, query or body, formData
+          description: Include additional dscription of the provider. This may help to contextualize the link better.
+          # type of the paramter: string, number, integer, boolean, array
+          type: boolean
+
+      # summary is up to 120 symbold but we recommend to be shortest as possible
+      summary: Get the concordance for a given resource
+      
+      # you can use GFM in operation description too: https://guides.github.com/features/mastering-markdown
+      description: | 
+        Check if there are some partner-links for a given resource of a provider. This request checks if the resource is in a concordance with other resources and delivers links to those resources.
+      
+      # operationId should be unique across the whole specification
+      operationId: getLinksForWidget
+      
+      # overwriting default global produces
+      produces:
+        - application/jsonp
+      responses: # list of responses
+        '200':
+          description: Success
+          schema: # response schema can be specified for each response
+            $ref: '#/definitions/Widget'
+          examples:
+          # repsonse samples for each type operation produces
+            application/json:
+              username: user1
+              email: user@example.com
+        '500':
+          description: Internal error
+        '404':
+          description: No concordance found. So no links to deliver
+
+  '/search/{entitySlug}':
+    get:
+      tags:
+        - search
+      summary: Search in the metagrid DB
+      description: Full text search in the metagrid Database. The search is limited to the text value of the index. 
+      operationId: search
+      parameters:
+        - name: entitySlug
+          in: path
+          required: true
+          description: The slug of the entity (person|place|organization) 
+          type: string
+        - name: query
+          in: query
+          description: A query to search in the DB
+          type: string
+        - name: provider
+          in: query
+          type: string
+          description: limit the serach to a provider
+        - name: take
+          description: Limit the resultset of a number of results
+          in: query
+          type: integer
+        - name: group
+          description: Group the results acording to thier concordance number. You will get a list of concordances
+          in: query
+          type: boolean
+      responses:
+        '200':
+          description: 'OK'
+          schema:
+            $ref: '#/definitions/SearchResult'
+# An object to hold data types that can be consumed and produced by operations.
+# These data types can be primitives, arrays or models.
+definitions:
+  Links:
+    description: A link object returned by the server
+    type: object
+    properties:
+      url:
+        description: The url of the resource
+        type: string
+      short_description:
+        description: A short description of the provider delivering the resource
+        type: string
+      long_description:
+        description: A longer description of the provider delivering the resource
+        type: string
+  # widget
+  Widget:
+    description: A collection of links corresponding to vthe requested resource
+    type: object
+    properties:
+      providerSlug:
+          $ref: '#/definitions/Links'
+  # Search results
+  SearchResult:
+    description: A set of serachresults
+    type: array
+    items:
+      $ref: "#/definitions/SearchObject"
+
+  SearchObject:
+    description: A singel search result
+    type: object
+    properties:
+      meta:
+        description: Metainformation of the request
+        type: object
+        properties:
+          total:
+            description: Total number of results
+            type: integer
+          limit:
+            description: Limit of the results
+            type: integer
+          start:
+            description: Start of the current fetch
+            type: integer
+          uri:
+            description: Current uri 
+            type: string
+      concordances:
+        type: array
+        items:
+          $ref: "#/definitions/Concordance"
+  Concordance:
+    description: A concordance is a group of resources from different providers
+    type: object
+    properties:
+      id:
+        description: Internal id of the concordance
+        type: integer
+      name: 
+        description: Calculated name of the concordance. This name is not autoritativ, its computed
+        type: string
+      resources:
+        description: A collection of resource which builds the concordance
+        type: array
+        items:
+          $ref: "#/definitions/Resource"
+  Resource:
+    description: The definition of a resource with theire metadata
+    type: object
+    properties:
+      _type:
+        description: The type of the resource (person|organization|place)
+        type: string
+      id:
+        description: Internal id of the resource
+        type: integer
+      uri:
+        type: string
+      identifier:
+        type: string
+      concordance:
+        type: object
+        properties:
+          id:
+            type: integer
+          uri:
+            type: string
+      provider:
+        type: object
+        properties:
+          slug:
+            type: string
+          uri:
+            type: string
+      link:
+        type: object
+        properties:
+          rel:
+            type: string
+          uri:
+            type: string
+      metadata:
+        $ref: "#/definitions/Metadata"
+
+  Metadata:
+    description: The extracted metadata of a resource
+    type: object
+    properties:
+      first_name:
+        type: string
+      last_name:
+        type: string
+      name:
+        type: string
+      birth_date:
+        type: string
+      death_date:
+        type: string
+      
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          
+          

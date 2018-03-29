@@ -1,13 +1,13 @@
 # metagrid OpenAPI Specification
-[![Build Status](https://travis-ci.org/metagridch/metagrid.github.io.svg?branch=master)](https://travis-ci.org/metagridch/metagrid.github.io)
+[![Build Status](https://travis-ci.org/metagridch/docs.svg?branch=master)](https://travis-ci.org/metagridch/docs)
 
 ## Links
 
-- Documentation(ReDoc): https://metagridch.github.io/
-- SwaggerUI: https://metagridch.github.io/swagger-ui/
+- Documentation(ReDoc): https://metagridch.github.io/docs
+- SwaggerUI: https://metagridch.github.io/docs/swagger-ui/
 - Look full spec:
-    + JSON https://metagridch.github.io/swagger.json
-    + YAML https://metagridch.github.io/swagger.yaml
+    + JSON https://metagridch.github.io/docs/swagger.json
+    + YAML https://metagridch.github.io/docs/swagger.yaml
 
 **Warning:** All above links are updated only after Travis CI finishes deployment
 
@@ -21,7 +21,7 @@
 ### Usage
 
 1. Run `npm start`
-2. Checkout console output to see where local server is started. You can use all [links](#links) (except `preview`) by replacing https://metagridch.github.io/metagrid.github.io/ with url from the message: `Server started <url>`
+2. Checkout console output to see where local server is started. You can use all [links](#links) by replacing https://metagridch.github.io/docs/ with url from the message: `Server started <url>`
 3. Make changes using your favorite editor or `swagger-editor` (look for URL in console output)
 4. All changes are immediately propagated to your local server, moreover all documentation pages will be automagically refreshed in a browser after each change
 **TIP:** you can open `swagger-editor`, documentation and `swagger-ui` in parallel

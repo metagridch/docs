@@ -12,11 +12,17 @@ basePath: / # Replace with your basePath. Note: SHOULD begin with '/'.
 info:
   # Describe your API here, you can use GFM (https://guides.github.com/features/mastering-markdown) here
   description: |
-    This is a brief documentation for the public metagrid API. This part of the API is available without authentification and delivers concordances and serach results from metagrid. Most often you can interact with the api over a client library. Currently there are clients for php and js. The preferred way to integrate the widget is with javascript directly in the frontend.
+    This is a brief documentation for the public metagrid API. This part of the API is available without authentification and delivers concordances and serach results from metagrid. Most often you can interact with the API over a client library. Currently there are clients for php and js. The preferred way to integrate the widget is using javascript directly in the frontend.
     # Introduction
-      Metgrid is designed to fetch data from different partner websites and API's and let user build concordances between same persons on differet websites. This helps to connect research projects with biographical data in a federative way. Metagid is not an normativ autority, it's just a repository of connection between different providers.
+      Metgrid is designed to fetch data from different partner websites and APIs and lets users build concordances between same persons on differet websites. This helps to connect research projects with biographical data in a federative way. Metagid is not an normative autority, it's just a repository of connections between different providers.
     # API
-      The API has public and a private accessible endpoints. This documentation just covers the public endpoints and is designed to help developers to integrate the api in theire project.
+      The API has public and a private accessible endpoints. This documentation just covers the public endpoints and is designed to help developers to integrate the API in their project.
+    # Concepts
+      Specific terms and concepts used by metagrid are explained here. 
+      * concordance: metagrid creates links between entries meaning the same thing (person) in different databases. A cluster of such links, all referring to the same ting, is called a concordance.
+      * providerSlug: Each provider has a specific slug, which is unique within metagrid. E.g. the historical lexicon of switzerland has the slug hls.
+      * entitySlug: For now, metagrid links persons, and no other entities. So the entitySlug is going to be person. When metagrid links other entities such as organizations or places, you'll have to choose.
+      * id: metagrid doesn't provide an authoritative id for linked entries. Id refers to the unique identifier of an entry (person) in a specific provider's database.
   version: '2.0.0' # Your API version
   # It can be any string but it is better to use semantic versioning: http://semver.org/
   # Warning: OpenAPI require version to be string, but without quotation YAML can recognize it as number.
@@ -27,7 +33,7 @@ info:
   termsOfService: 'https://www.metagrid.ch/en/code-of-conduct/' # [Optional] Replace with an URL to your ToS
   contact:
     email: info@metagrid.ch # [Optional] Replace with your contact email
-    url: 'https://www.metagrid.ch/ueber-uns/' # [Optional] Replace with link to your contact form
+    url: 'https://www.metagrid.ch/en/about-us/' # [Optional] Replace with link to your contact form
   license:
     name: AGPL
     url: 'http://www.apache.org/licenses/LICENSE-2.0.html'
@@ -51,7 +57,7 @@ consumes:
 # The order of the tags can be used to reflect on their order by the parsing tools.
 tags:
   - name: widget
-    description: Serves links for a give resource of a provider
+    description: Serves links for a given resource of a provider
   - name: search
     description: Search in metagrid
 
@@ -103,7 +109,7 @@ paths:
       
       # you can use GFM in operation description too: https://guides.github.com/features/mastering-markdown
       description: | 
-        Check if there are some partner-links for a given resource of a provider. This request checks if the resource is in a concordance with other resources and delivers links to those resources.
+        Check if there are any partner-links for a given resource of a provider. This request checks if the resource is in a concordance with other resources and delivers links to those resources.
       
       # operationId should be unique across the whole specification
       operationId: getLinksForWidget
@@ -236,7 +242,7 @@ definitions:
         type: string
   # widget
   Widget:
-    description: A collection of links corresponding to vthe requested resource
+    description: A collection of links corresponding to the requested resource
     type: object
     properties:
       providerSlug:

@@ -6,17 +6,17 @@ host: api.metagrid.ch
 basePath: /
 info:
   description: |
-    This is a brief documentation for the public metagrid API. This part of the API is available without authentification and delivers concordances and serach results from metagrid. Most often you can interact with the API over a client library. Currently there are clients for php and js. The preferred way to integrate the widget is using javascript directly in the frontend.
+    This is a brief documentation for the public Metagrid API. This part of the API is available without authentification and delivers concordances and serach results from Metagrid. Most often you can interact with the API over a client library. Currently there are clients for php and js. The preferred way to integrate the widget is using javascript directly in the frontend.
     # Introduction
-      Metgrid is designed to fetch data from different partner websites and APIs and lets users build concordances between same persons on differet websites. This helps to connect research projects with biographical data in a federative way. Metagid is not an normative autority, it's just a repository of connections between different providers.
+      Metgrid is designed to fetch data from different partner websites and APIs and lets users build concordances between same entities (e.g. persons) on differet websites. This helps to connect research projects with similas (e.g. biographical) data in a federative way. Metagid is not an normative autority, it's just a repository of connections between different providers.
     # API
       The API has public and a private accessible endpoints. This documentation just covers the public endpoints and is designed to help developers to integrate the API in their project.
     # Concepts
-      Specific terms and concepts used by metagrid are explained here. 
-      * concordance: metagrid creates links between entries meaning the same thing (person) in different databases. A cluster of such links, all referring to the same ting, is called a concordance.
-      * providerSlug: Each provider has a specific slug, which is unique within metagrid. E.g. the historical lexicon of switzerland has the slug hls.
-      * entitySlug: For now, metagrid links persons, and no other entities. So the entitySlug is going to be person. When metagrid links other entities such as organizations or places, you'll have to choose.
-      * id: metagrid doesn't provide an authoritative id for linked entries. Id refers to the unique identifier of an entry (person) in a specific provider's database.
+      Specific terms and concepts used by Metagrid are explained here. 
+      * concordance: Metagrid creates links between entries meaning the same thing (person) in different databases. A cluster of such links, all referring to the same thing, is called a concordance.
+      * providerSlug: Each provider has a specific slug, which is unique within Metagrid. E.g. the historical lexicon of Switzerland has the slug hls.
+      * entitySlug: For now, Metagrid links persons, and no other entities. So the entitySlug is going to be person. When Metagrid links other entities such as organizations or places, you'll have to choose.
+      * id: Metagrid doesn't provide an authoritative id for linked entries. Id refers to the unique identifier of an entry (person) in a specific provider's database.
   version: 2.0.0
   title: api.metagrid.ch
   termsOfService: 'https://www.metagrid.ch/en/code-of-conduct/'
@@ -37,7 +37,7 @@ tags:
   - name: widget
     description: Serves links for a given resource of a provider
   - name: search
-    description: Search in metagrid
+    description: Search in Metagrid
 paths:
   '/widget/{providerSlug}/{entitySlug}/{id}':
     get:
@@ -101,8 +101,8 @@ paths:
     get:
       tags:
         - search
-      summary: Search in the metagrid DB
-      description: Full text search in the metagrid Database. The search is limited to the text value of the index.
+      summary: Search in the Metagrid DB
+      description: Full text search in the Metagrid Database. The search is limited to the text value of the index.
       operationId: search
       parameters:
         - name: entitySlug

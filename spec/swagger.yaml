@@ -12,16 +12,16 @@ basePath: / # Replace with your basePath. Note: SHOULD begin with '/'.
 info:
   # Describe your API here, you can use GFM (https://guides.github.com/features/mastering-markdown) here
   description: |
-    This is a brief documentation for the public Metagrid API. This part of the API is available without authentification and delivers concordances and serach results from Metagrid. Most often you can interact with the API over a client library. Currently there are clients for php and js. The preferred way to integrate the widget is using javascript directly in the frontend.
+    This is a brief documentation for the public Metagrid API. This part of the API is available without authentification and delivers concordances and serach results from Metagrid. Most often you can interact with the API using a client library. Currently there are clients for php and js. The preferred way to integrate the widget is using javascript directly in the frontend.
     # Introduction
-      Metgrid is designed to fetch data from different partner websites and APIs and lets users build concordances between same entities (e.g. persons) on differet websites. This helps to connect research projects with similas (e.g. biographical) data in a federative way. Metagid is not an normative autority, it's just a repository of connections between different providers.
+      Metgrid is designed to fetch data from different partner websites and APIs and lets users build concordances between same entities (e.g. persons) on different websites. This helps connecting research projects with similar (e.g. biographical) data in a federative way. Metagid is not an normative autority, it's just a repository of connections between different providers.
     # API
       The API has public and a private accessible endpoints. This documentation just covers the public endpoints and is designed to help developers to integrate the API in their project.
     # Concepts
       Specific terms and concepts used by Metagrid are explained here. 
-      * concordance: Metagrid creates links between entries meaning the same thing (person) in different databases. A cluster of such links, all referring to the same thing, is called a concordance.
-      * providerSlug: Each provider has a specific slug, which is unique within Metagrid. E.g. the historical lexicon of Switzerland has the slug hls.
-      * entitySlug: For now, Metagrid links persons, and no other entities. So the entitySlug is going to be person. When Metagrid links other entities such as organizations or places, you'll have to choose.
+      * concordance: Metagrid creates links between entries talking about the same thing (person) in different databases. A cluster of such links, all referring to the same thing, is called a concordance.
+      * providerSlug: Each provider has a specific slug, which is unique within Metagrid. E.g. the Historical Lexicon of Switzerland has the slug hls.
+      * entitySlug: For now, Metagrid links persons, and no other entities. So the entitySlug is going to be person. When Metagrid links other entities such as organizations or places, you'll have to choose one of these.
       * id: Metagrid doesn't provide an authoritative id for linked entries. Id refers to the unique identifier of an entry (person) in a specific provider's database.
   version: '2.0.0' # Your API version
   # It can be any string but it is better to use semantic versioning: http://semver.org/
@@ -84,7 +84,7 @@ paths:
         - name: id
           required: true
           in: path # place where paramter is passed: path, header, query or body, formData
-          description: 'The identifier of the resource in the providers DB. Most often this is a numeric value'
+          description: 'The identifier of the resource in the providers database. Most often this is a numeric value'
           # type of the paramter: string, number, integer, boolean, array
           type: string
         - name: jsoncallback
@@ -160,11 +160,11 @@ paths:
           type: string
           description: limit the serach to a provider
         - name: take
-          description: Limit the resultset of a number of results
+          description: Limit the resultset to a number of results
           in: query
           type: integer
         - name: group
-          description: Group the results acording to thier concordance number. You will get a list of concordances
+          description: Group the results according to thier concordance number. You will get a list of concordances
           in: query
           type: boolean
       responses:
@@ -255,7 +255,7 @@ definitions:
       $ref: "#/definitions/SearchObject"
 
   SearchObject:
-    description: A singel search result
+    description: A single search result
     type: object
     properties:
       meta:
@@ -286,15 +286,15 @@ definitions:
         description: Internal id of the concordance
         type: integer
       name: 
-        description: Calculated name of the concordance. This name is not autoritativ, its computed
+        description: Calculated name of the concordance. This name is not autoritative, it is computed
         type: string
       resources:
-        description: A collection of resource which builds the concordance
+        description: A collection of resources which build the concordance
         type: array
         items:
           $ref: "#/definitions/Resource"
   Resource:
-    description: The definition of a resource with theire metadata
+    description: The definition of a resource with their metadata
     type: object
     properties:
       _type:
@@ -346,15 +346,4 @@ definitions:
       death_date:
         type: string
       
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
-          
           
